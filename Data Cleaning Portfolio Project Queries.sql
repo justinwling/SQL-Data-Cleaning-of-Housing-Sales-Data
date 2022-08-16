@@ -3,26 +3,27 @@
 
 Select *
 From [SQL Data Cleaning].dbo.NashvilleHousing
+order by saledate
 --------------------------------------------------------------------------------------------------------------------------
 
 -- Standardize Sale Date Format
 -- SaleDate data is in timedate format, but the time data is not used ('00:00:00.000')
 --    SaleDate converted from timedate to date format
+
+
+ALTER Table [SQL Data Cleaning].dbo.NashvilleHousing
+ALTER COlUMN SaleDate Date;
+
 Select *
 From [SQL Data Cleaning].dbo.NashvilleHousing
-
-ALTER Table NashvilleHousing
-ALTER COlUMN SaleDate Date;
+order by SaleDate
 
 
  --------------------------------------------------------------------------------------------------------------------------
 
 -- Populate Property Address data that was left blank
 
-Select *
-From [SQL Data Cleaning].dbo.NashvilleHousing
---Where PropertyAddress is null
-order by ParcelID
+5
 
 -- For rows with a null PropertyAddress, the address should be the same as any other row that has the same ParcelID
  
@@ -110,25 +111,25 @@ From [SQL Data Cleaning].dbo.NashvilleHousing
 
 
 -- Now using the above method below along with Alter Table to make the changes to the table
-ALTER TABLE NashvilleHousing
+ALTER TABLE [SQL Data Cleaning].dbo.NashvilleHousing
 Add OwnerSplitAddress Nvarchar(255);
 
-ALTER TABLE NashvilleHousing
+ALTER TABLE [SQL Data Cleaning].dbo.NashvilleHousing
 Add OwnerSplitCity Nvarchar(255);
 
-ALTER TABLE NashvilleHousing
+ALTER TABLE [SQL Data Cleaning].dbo.NashvilleHousing
 Add OwnerSplitState Nvarchar(255);
 
-Update NashvilleHousing
+Update [SQL Data Cleaning].dbo.NashvilleHousing
 SET OwnerSplitAddress = PARSENAME(REPLACE(OwnerAddress, ',', '.') , 3)
 
-Update NashvilleHousing
+Update [SQL Data Cleaning].dbo.NashvilleHousing
 SET OwnerSplitCity = PARSENAME(REPLACE(OwnerAddress, ',', '.') , 2)
 
-Update NashvilleHousing
+Update [SQL Data Cleaning].dbo.NashvilleHousing
 SET OwnerSplitState = PARSENAME(REPLACE(OwnerAddress, ',', '.') , 1)
 
-Select *
+Select OwnerAddress, OwnerSplitAddress,OwnerSplitCity,OwnerSplitState
 From [SQL Data Cleaning].dbo.NashvilleHousing
 
 
